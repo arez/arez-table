@@ -22,8 +22,6 @@ artifacts:
 
   guiceyloops: org.realityforge.guiceyloops:guiceyloops:jar:0.113
 
-  javapoet: com.squareup:javapoet:jar:1.13.0
-
   # GWT deps
   gwt_user: org.gwtproject:gwt-user:jar:2.11.0
   gwt_dev: org.gwtproject:gwt-dev:jar:2.11.0
