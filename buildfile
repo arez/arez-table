@@ -12,6 +12,7 @@ TEST_OPTIONS =
   {
     'braincheck.environment' => 'development',
     'arez.environment' => 'development',
+    'arez.table.environment' => 'development',
   }
 
 desc 'Arez-Table: An Arez-powered Headless UI library for building tables and data grids'
@@ -35,7 +36,9 @@ define 'arez-table' do
                      :grim_annotations,
                      :braincheck,
                      :arez_core,
-                     :jetbrains_annotations)
+                     :jetbrains_annotations,
+                     :jsinterop_base,
+                     :jsinterop_annotations)
     pom.include_transitive_dependencies << deps
     pom.dependency_filter = Proc.new { |dep| dep[:scope].to_s != 'test' && deps.include?(dep[:artifact]) }
 
@@ -43,6 +46,8 @@ define 'arez-table' do
 
     compile.options[:processor_path] << [:arez_processor, :grim_processor, :javax_json]
 
+    test.options[:properties] =
+      TEST_OPTIONS.merge('arez.table.core.compile_target' => compile.target.to_s)
     test.options[:java_args] = ['-ea']
 
     gwt_enhance(project)
@@ -91,14 +96,14 @@ define 'arez-table' do
 
   iml.excluded_directories << project._('tmp')
 
-  ipr.add_default_testng_configuration(:jvm_args => "-ea -Dbraincheck.environment=development -Darez.environment=development")
+  ipr.add_default_testng_configuration(:jvm_args => "-ea -Dbraincheck.environment=development -Darez.environment=development -Darez.table.environment=development -Darez.table.core.compile_target=target/arez-table_core/idea/classes")
 
   ipr.add_testng_configuration('core',
                                :module => 'core',
-                               :jvm_args => '-ea -Dbraincheck.environment=development -Darez.environment=development')
+                               :jvm_args => '-ea -Dbraincheck.environment=development -Darez.environment=development -Darez.table.environment=development -Darez.table.core.compile_target=../target/arez-table_core/idea/classes')
   ipr.add_testng_configuration('integration-tests',
                                :module => 'integration-tests',
-                               :jvm_args => '-ea -Dbraincheck.environment=development -Darez.environment=development')
+                               :jvm_args => '-ea -Dbraincheck.environment=development -Darez.environment=development -Darez.table.environment=development')
 
   ipr.nonnull_assertions = false
 

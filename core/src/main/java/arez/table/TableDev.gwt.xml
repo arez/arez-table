@@ -1,0 +1,10 @@
+<module>
+  <inherits name='arez.table.Table'/>
+  <inherits name='org.realityforge.braincheck.BrainCheckDev'/>
+
+  <source path='ignored'/>
+
+  <set-property name='arez.table.environment' value='development'/>
+
+  <set-property name='arez.table.check_api_invariants' value='true'/>
+</module>
