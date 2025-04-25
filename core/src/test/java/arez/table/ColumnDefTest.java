@@ -117,7 +117,7 @@ public final class ColumnDefTest
   }
 
   @Test
-  public void createAccessor_minimalData()
+  public void createAccessor_almostMinimalData()
   {
     final String id = ValueUtil.randomString();
     final String header = ValueUtil.randomString();
