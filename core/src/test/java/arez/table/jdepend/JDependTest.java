@@ -27,15 +27,17 @@ public final class JDependTest
     final JavaPackage arez = constraint.addPackage( "arez" );
     final JavaPackage arezComponent = constraint.addPackage( "arez.component" );
     final JavaPackage arezComponentInternal = constraint.addPackage( "arez.component.internal" );
+    final JavaPackage arezSpy = constraint.addPackage( "arez.spy" );
     final JavaPackage braincheck = constraint.addPackage( "org.realityforge.braincheck" );
     final JavaPackage table = constraint.addPackage( "arez.table" );
     final JavaPackage jsinterop = constraint.addPackage( "jsinterop.annotations" );
 
     table.dependsUpon( braincheck );
     table.dependsUpon( jsinterop );
-    //table.dependsUpon( arez );
-    //table.dependsUpon( arezComponent );
-    //table.dependsUpon( arezComponentInternal );
+    table.dependsUpon( arez );
+    table.dependsUpon( arezComponent );
+    table.dependsUpon( arezComponentInternal );
+    table.dependsUpon( arezSpy );
 
     final DependencyConstraint.MatchResult result = jdepend.analyzeDependencies( constraint );
 
