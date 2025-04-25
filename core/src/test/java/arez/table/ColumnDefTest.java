@@ -16,7 +16,8 @@ public final class ColumnDefTest
                                                    null,
                                                    null,
                                                    null,
-                                                   null ),
+                                                   null,
+                                                   true ),
                             "Arbl-002: ColumnDef(): dataAccessor MUST be null unless kind is ACCESSOR otherwise it must not be null" );
 
     assertInvariantFailure( () -> new ColumnDef<>( ColumnKind.DISPLAY,
@@ -25,7 +26,8 @@ public final class ColumnDefTest
                                                    MyEntity::getName,
                                                    null,
                                                    null,
-                                                   null ),
+                                                   null,
+                                                   true ),
                             "Arbl-002: ColumnDef(): dataAccessor MUST be null unless kind is ACCESSOR otherwise it must not be null" );
 
     assertInvariantFailure( () -> new ColumnDef<>( ColumnKind.GROUPING,
@@ -34,7 +36,8 @@ public final class ColumnDefTest
                                                    MyEntity::getName,
                                                    null,
                                                    null,
-                                                   null ),
+                                                   null,
+                                                   true ),
                             "Arbl-002: ColumnDef(): dataAccessor MUST be null unless kind is ACCESSOR otherwise it must not be null" );
   }
 
@@ -47,7 +50,8 @@ public final class ColumnDefTest
                                                    null,
                                                    null,
                                                    ( tableData, rowData, cellData ) -> "",
-                                                   null ),
+                                                   null,
+                                                   true ),
                             "Arbl-003: ColumnDef(): cellFormatter MUST be null when kind is GROUPING" );
   }
 
@@ -61,7 +65,8 @@ public final class ColumnDefTest
                                                    MyEntity::getName,
                                                    null,
                                                    null,
-                                                   null ),
+                                                   null,
+                                                   true ),
                             "Arbl-004: ColumnDef(): id MUST NOT be null" );
   }
 
@@ -75,7 +80,8 @@ public final class ColumnDefTest
                                                    MyEntity::getName,
                                                    null,
                                                    null,
-                                                   null ),
+                                                   null,
+                                                   true ),
                             "Arbl-004: ColumnDef(): header MUST NOT be null" );
   }
 
@@ -90,9 +96,15 @@ public final class ColumnDefTest
     final CellFormatter<MyEntitySet, MyEntity, String, String> cellFormatter =
       ( tableData, rowData, cellData ) -> cellData;
     final NoDataCellFormatter<MyEntitySet, String> footerFormatter = tableData -> "";
-
+    final boolean isHidingEnabled = ValueUtil.randomBoolean();
     final var accessor =
-      ColumnDef.createAccessor( id, header, dataAccessor, headerFormatter, cellFormatter, footerFormatter );
+      ColumnDef.createAccessor( id,
+                                header,
+                                dataAccessor,
+                                headerFormatter,
+                                cellFormatter,
+                                footerFormatter,
+                                isHidingEnabled );
 
     assertEquals( accessor.getKind(), ColumnKind.ACCESSOR );
     assertEquals( accessor.getId(), id );
@@ -101,6 +113,7 @@ public final class ColumnDefTest
     assertEquals( accessor.getHeaderFormatter(), headerFormatter );
     assertEquals( accessor.getCellFormatter(), cellFormatter );
     assertEquals( accessor.getFooterFormatter(), footerFormatter );
+    assertEquals( accessor.isHidingEnabled(), isHidingEnabled );
   }
 
   @Test
@@ -120,6 +133,7 @@ public final class ColumnDefTest
     assertNull( accessor.getHeaderFormatter() );
     assertNull( accessor.getCellFormatter() );
     assertNull( accessor.getFooterFormatter() );
+    assertTrue( accessor.isHidingEnabled() );
   }
 
   @Test
@@ -138,6 +152,7 @@ public final class ColumnDefTest
     assertNull( accessor.getHeaderFormatter() );
     assertNull( accessor.getCellFormatter() );
     assertNull( accessor.getFooterFormatter() );
+    assertTrue( accessor.isHidingEnabled() );
   }
 
   @Test
@@ -161,7 +176,8 @@ public final class ColumnDefTest
                                                             null,
                                                             null,
                                                             null,
-                                                            null );
+                                                            null,
+                                                            true );
 
     assertInvariantFailure( accessor::getDataAccessor,
                             "Arbl-001: ColumnDef.getDataAccessor() invoked on column " +
@@ -188,7 +204,8 @@ public final class ColumnDefTest
                                                             null,
                                                             null,
                                                             null,
-                                                            null );
+                                                            null,
+                                                            true );
 
     final MyEntity rowData = new MyEntity();
     assertInvariantFailure( () -> accessor.getCellData( rowData ),

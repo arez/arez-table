@@ -43,6 +43,7 @@ public final class ColumnDef<TableDataT, RowDataT, CellDataT, RenderTypeT>
   private final CellFormatter<TableDataT, RowDataT, CellDataT, RenderTypeT> _cellFormatter;
   @Nullable
   private final NoDataCellFormatter<TableDataT, RenderTypeT> _footerFormatter;
+  private boolean _hidingEnabled;
 
   @Nonnull
   public static <TableDataT, RowDataT, CellDataT, RenderTypeT>
@@ -77,13 +78,27 @@ public final class ColumnDef<TableDataT, RowDataT, CellDataT, RenderTypeT>
                                                                           @Nullable final CellFormatter<TableDataT, RowDataT, CellDataT, RenderTypeT> cellFormatter,
                                                                           @Nullable final NoDataCellFormatter<TableDataT, RenderTypeT> footerFormatter )
   {
+    return createAccessor( id, header, dataAccessor, headerFormatter, cellFormatter, footerFormatter, true );
+  }
+
+  @Nonnull
+  public static <TableDataT, RowDataT, CellDataT, RenderTypeT>
+  ColumnDef<TableDataT, RowDataT, CellDataT, RenderTypeT> createAccessor( @Nonnull final String id,
+                                                                          @Nonnull final String header,
+                                                                          @Nonnull final CellDataAccessor<RowDataT, CellDataT> dataAccessor,
+                                                                          @Nullable final NoDataCellFormatter<TableDataT, RenderTypeT> headerFormatter,
+                                                                          @Nullable final CellFormatter<TableDataT, RowDataT, CellDataT, RenderTypeT> cellFormatter,
+                                                                          @Nullable final NoDataCellFormatter<TableDataT, RenderTypeT> footerFormatter,
+                                                                          final boolean hidingEnabled )
+  {
     return new ColumnDef<>( ColumnKind.ACCESSOR,
                             id,
                             header,
                             dataAccessor,
                             headerFormatter,
                             cellFormatter,
-                            footerFormatter );
+                            footerFormatter,
+                            hidingEnabled );
   }
 
   @VisibleForTesting
@@ -93,7 +108,8 @@ public final class ColumnDef<TableDataT, RowDataT, CellDataT, RenderTypeT>
              @Nullable final CellDataAccessor<RowDataT, CellDataT> dataAccessor,
              @Nullable final NoDataCellFormatter<TableDataT, RenderTypeT> headerFormatter,
              @Nullable final CellFormatter<TableDataT, RowDataT, CellDataT, RenderTypeT> cellFormatter,
-             @Nullable final NoDataCellFormatter<TableDataT, RenderTypeT> footerFormatter )
+             @Nullable final NoDataCellFormatter<TableDataT, RenderTypeT> footerFormatter,
+             final boolean hidingEnabled )
   {
     if ( ArezTable.shouldCheckApiInvariants() )
     {
@@ -117,6 +133,7 @@ public final class ColumnDef<TableDataT, RowDataT, CellDataT, RenderTypeT>
     _headerFormatter = headerFormatter;
     _cellFormatter = cellFormatter;
     _footerFormatter = footerFormatter;
+    _hidingEnabled = hidingEnabled;
   }
 
   @Nonnull
@@ -158,6 +175,11 @@ public final class ColumnDef<TableDataT, RowDataT, CellDataT, RenderTypeT>
   public NoDataCellFormatter<TableDataT, RenderTypeT> getFooterFormatter()
   {
     return _footerFormatter;
+  }
+
+  public boolean isHidingEnabled()
+  {
+    return _hidingEnabled;
   }
 
   @VisibleForTesting
