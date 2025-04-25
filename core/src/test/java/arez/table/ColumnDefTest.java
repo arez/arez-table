@@ -71,7 +71,7 @@ public final class ColumnDefTest
   }
 
   @Test
-  public void constructor_id_header()
+  public void constructor_header_presence()
   {
     //noinspection DataFlowIssue
     assertInvariantFailure( () -> new ColumnDef<>( ColumnKind.ACCESSOR,
@@ -82,7 +82,7 @@ public final class ColumnDefTest
                                                    null,
                                                    null,
                                                    true ),
-                            "Arbl-004: ColumnDef(): header MUST NOT be null" );
+                            "Arbl-005: ColumnDef(): header MUST NOT be null" );
   }
 
   @Test

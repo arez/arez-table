@@ -121,7 +121,7 @@ public final class ColumnDef<TableDataT, RowDataT, CellDataT, RenderTypeT>
       //noinspection ConstantValue
       apiInvariant( () -> null != id, () -> "Arbl-004: ColumnDef(): id MUST NOT be null" );
       //noinspection ConstantValue
-      apiInvariant( () -> null != header, () -> "Arbl-004: ColumnDef(): header MUST NOT be null" );
+      apiInvariant( () -> null != header, () -> "Arbl-005: ColumnDef(): header MUST NOT be null" );
     }
     assert ( ColumnKind.ACCESSOR != kind && null == dataAccessor ) ||
            ( ColumnKind.ACCESSOR == kind && null != dataAccessor );
