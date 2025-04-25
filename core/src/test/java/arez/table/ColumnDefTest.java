@@ -97,7 +97,7 @@ public final class ColumnDefTest
       ( tableData, rowData, cellData ) -> cellData;
     final NoDataCellFormatter<MyEntitySet, String> footerFormatter = tableData -> "";
     final boolean isHidingEnabled = ValueUtil.randomBoolean();
-    final var accessor =
+    final var columnDef =
       ColumnDef.createAccessor( id,
                                 header,
                                 dataAccessor,
@@ -106,14 +106,14 @@ public final class ColumnDefTest
                                 footerFormatter,
                                 isHidingEnabled );
 
-    assertEquals( accessor.getKind(), ColumnKind.ACCESSOR );
-    assertEquals( accessor.getId(), id );
-    assertEquals( accessor.getHeader(), header );
-    assertEquals( accessor.getDataAccessor(), dataAccessor );
-    assertEquals( accessor.getHeaderFormatter(), headerFormatter );
-    assertEquals( accessor.getCellFormatter(), cellFormatter );
-    assertEquals( accessor.getFooterFormatter(), footerFormatter );
-    assertEquals( accessor.isHidingEnabled(), isHidingEnabled );
+    assertEquals( columnDef.getKind(), ColumnKind.ACCESSOR );
+    assertEquals( columnDef.getId(), id );
+    assertEquals( columnDef.getHeader(), header );
+    assertEquals( columnDef.getDataAccessor(), dataAccessor );
+    assertEquals( columnDef.getHeaderFormatter(), headerFormatter );
+    assertEquals( columnDef.getCellFormatter(), cellFormatter );
+    assertEquals( columnDef.getFooterFormatter(), footerFormatter );
+    assertEquals( columnDef.isHidingEnabled(), isHidingEnabled );
   }
 
   @Test
@@ -124,16 +124,16 @@ public final class ColumnDefTest
 
     final CellDataAccessor<MyEntity, String> dataAccessor = MyEntity::getName;
 
-    final var accessor = ColumnDef.createAccessor( id, header, dataAccessor );
+    final var columnDef = ColumnDef.createAccessor( id, header, dataAccessor );
 
-    assertEquals( accessor.getKind(), ColumnKind.ACCESSOR );
-    assertEquals( accessor.getId(), id );
-    assertEquals( accessor.getHeader(), header );
-    assertEquals( accessor.getDataAccessor(), dataAccessor );
-    assertNull( accessor.getHeaderFormatter() );
-    assertNull( accessor.getCellFormatter() );
-    assertNull( accessor.getFooterFormatter() );
-    assertTrue( accessor.isHidingEnabled() );
+    assertEquals( columnDef.getKind(), ColumnKind.ACCESSOR );
+    assertEquals( columnDef.getId(), id );
+    assertEquals( columnDef.getHeader(), header );
+    assertEquals( columnDef.getDataAccessor(), dataAccessor );
+    assertNull( columnDef.getHeaderFormatter() );
+    assertNull( columnDef.getCellFormatter() );
+    assertNull( columnDef.getFooterFormatter() );
+    assertTrue( columnDef.isHidingEnabled() );
   }
 
   @Test
@@ -143,16 +143,16 @@ public final class ColumnDefTest
 
     final CellDataAccessor<MyEntity, String> dataAccessor = MyEntity::getName;
 
-    final var accessor = ColumnDef.createAccessor( header, dataAccessor );
+    final var columnDef = ColumnDef.createAccessor( header, dataAccessor );
 
-    assertEquals( accessor.getKind(), ColumnKind.ACCESSOR );
-    assertEquals( accessor.getId(), "hello_foo_" );
-    assertEquals( accessor.getHeader(), header );
-    assertEquals( accessor.getDataAccessor(), dataAccessor );
-    assertNull( accessor.getHeaderFormatter() );
-    assertNull( accessor.getCellFormatter() );
-    assertNull( accessor.getFooterFormatter() );
-    assertTrue( accessor.isHidingEnabled() );
+    assertEquals( columnDef.getKind(), ColumnKind.ACCESSOR );
+    assertEquals( columnDef.getId(), "hello_foo_" );
+    assertEquals( columnDef.getHeader(), header );
+    assertEquals( columnDef.getDataAccessor(), dataAccessor );
+    assertNull( columnDef.getHeaderFormatter() );
+    assertNull( columnDef.getCellFormatter() );
+    assertNull( columnDef.getFooterFormatter() );
+    assertTrue( columnDef.isHidingEnabled() );
   }
 
   @Test
@@ -160,16 +160,16 @@ public final class ColumnDefTest
   {
     final CellDataAccessor<MyEntity, String> dataAccessor = MyEntity::getName;
 
-    final var accessor = ColumnDef.createAccessor( ValueUtil.randomString(), dataAccessor );
+    final var columnDef = ColumnDef.createAccessor( ValueUtil.randomString(), dataAccessor );
 
-    assertEquals( accessor.getDataAccessor(), dataAccessor );
+    assertEquals( columnDef.getDataAccessor(), dataAccessor );
   }
 
   @Test
   public void getDataAccessor_missingDataAccessor()
   {
     final String id = ValueUtil.randomString();
-    final var accessor =
+    final var columnDef =
       new ColumnDef<MyEntitySet, MyEntity, String, String>( ColumnKind.DISPLAY,
                                                             id,
                                                             ValueUtil.randomString(),
@@ -179,7 +179,7 @@ public final class ColumnDefTest
                                                             null,
                                                             true );
 
-    assertInvariantFailure( accessor::getDataAccessor,
+    assertInvariantFailure( columnDef::getDataAccessor,
                             "Arbl-001: ColumnDef.getDataAccessor() invoked on column " +
                             id + " but dataAccessor is null" );
   }
@@ -187,17 +187,17 @@ public final class ColumnDefTest
   @Test
   public void getCellData()
   {
-    final var accessor = ColumnDef.createAccessor( ValueUtil.randomString(), MyEntity::getName );
+    final var columnDef = ColumnDef.createAccessor( ValueUtil.randomString(), MyEntity::getName );
 
     final MyEntity rowData = new MyEntity();
-    assertEquals( accessor.getCellData( rowData ), rowData.getName() );
+    assertEquals( columnDef.getCellData( rowData ), rowData.getName() );
   }
 
   @Test
   public void getCellData_missingDataAccessor()
   {
     final String id = ValueUtil.randomString();
-    final var accessor =
+    final var columnDef =
       new ColumnDef<MyEntitySet, MyEntity, String, String>( ColumnKind.DISPLAY,
                                                             id,
                                                             ValueUtil.randomString(),
@@ -208,7 +208,7 @@ public final class ColumnDefTest
                                                             true );
 
     final MyEntity rowData = new MyEntity();
-    assertInvariantFailure( () -> accessor.getCellData( rowData ),
+    assertInvariantFailure( () -> columnDef.getCellData( rowData ),
                             "Arbl-001: ColumnDef.getDataAccessor() invoked on column " +
                             id + " but dataAccessor is null" );
   }
