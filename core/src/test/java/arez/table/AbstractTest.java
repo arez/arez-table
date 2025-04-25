@@ -1,10 +1,7 @@
 package arez.table;
 
 import arez.testng.ArezTestSupport;
-import java.util.HashMap;
-import java.util.Map;
 import javax.annotation.Nonnull;
-import org.realityforge.guiceyloops.shared.ValueUtil;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import static org.testng.Assert.*;
