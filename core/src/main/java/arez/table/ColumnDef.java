@@ -167,7 +167,8 @@ public final class ColumnDef<TableDataT, RowDataT, CellDataT, RenderTypeT>
     if ( ArezTable.shouldCheckApiInvariants() )
     {
       apiInvariant( () -> null != _dataAccessor,
-                    () -> "Arbl-001: ColumnDef.getDataAccessor() invoked on column " + getId() + " but dataAccessor is null" );
+                    () -> "Arbl-001: ColumnDef.getDataAccessor() invoked on column " +
+                          getId() + " but dataAccessor is null" );
     }
     assert null != _dataAccessor;
     return _dataAccessor;
