@@ -6,11 +6,6 @@ desc 'Publish the website'
 task 'site:publish' => 'doc' do
   origin_url = 'https://github.com/arez/arez.github.io.git'
 
-  travis_build_number = ENV['TRAVIS_BUILD_NUMBER']
-  if travis_build_number
-    origin_url = origin_url.gsub('https://github.com/', 'git@github.com:')
-  end
-
   component_name = Buildr.projects[0].name.gsub('arez-', '')
 
   local_dir = "#{WORKSPACE_DIR}/target/remote_site"
@@ -23,7 +18,7 @@ task 'site:publish' => 'doc' do
 
   in_dir(local_dir) do
     message =
-      "Publishing docs for component #{component_name}#{travis_build_number.nil? ? '' : " - Travis build: #{travis_build_number}"}"
+      "Publishing docs for component #{component_name}"
 
     rm_rf "#{local_dir}/#{component_name}"
     cp_r SITE_DIR, "#{local_dir}/#{component_name}"
