@@ -1,6 +1,5 @@
 # Arez-Persist
 
-[![Build Status](https://api.travis-ci.com/arez/arez-table.svg?branch=main)](http://travis-ci.com/arez/arez-table)
 [<img src="https://img.shields.io/maven-central/v/org.realityforge.arez.table/arez-table.svg?label=latest%20release"/>](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22org.realityforge.arez.table%22)
 
 This library provides a Headless UI library for building powerful tables & datagrids.
